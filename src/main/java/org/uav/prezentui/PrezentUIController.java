@@ -1,17 +1,19 @@
 package org.uav.prezentui;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import org.controlsfx.control.PopOver;
+
+import java.io.IOException;
 import java.util.*;
 
 import static javafx.geometry.Pos.*;
 
 // Clasa care controleaza elementele (butoane, meniuri etc) aplicatiei
-public class HelloController {
+public class PrezentUIController {
     // ID-uri pentru fiecare button
     @FXML private Button btnIntPrez;
     @FXML private Button btnVizPrez;
@@ -20,9 +22,9 @@ public class HelloController {
     // Pop-over pentru introducere prezente
     @FXML protected void onHelloButtonClick() {
         // creeam un layout vertical pentru a ordona frumos elementele
-        VBox box = new VBox(10);
+        VBox box = new VBox(15);
         box.setPadding(new Insets(10, 10, 10, 10));
-        box.setSpacing(5);
+        box.setSpacing(7.5);
 
         // creeam combo box-ul pentru materii
         ComboBox<String> cmb = new ComboBox<String>();
@@ -76,12 +78,16 @@ public class HelloController {
         popOver.show(btnIntPrez);
     }
 
+    @FXML protected void onVizPrezClick() throws IOException {
+        PrezentUIApp.startTabel( new Stage() );
+    }
+
     // Pop-over pentru vizualizare prezente (admin)
     @FXML protected void onVizPrezAdminClick() {
         // creeam un layout vertical
-        VBox box = new VBox(10);
+        VBox box = new VBox(15);
         box.setPadding(new Insets(10, 10, 10, 10));
-        box.setSpacing(5);
+        box.setSpacing(7.5);
 
         // creeam un layout orizontal inauntrul layout-ului nostru pentru a aseza butonul pe partea dreapta a
         // ferestrei si adaugam butonul
