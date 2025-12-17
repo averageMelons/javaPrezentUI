@@ -21,10 +21,11 @@
 
     <!-- adaugam butoane ce vor rula functii/metoda cu "onAction" -->
     <Button fx:id="btnIntPrez" onAction="#onHelloButtonClick" text="Introducere Prezenta" />
-   <HBox alignment="CENTER" prefHeight="8.0" prefWidth="518.0" spacing="10.0">
+    <HBox alignment="CENTER" prefHeight="8.0" prefWidth="518.0" spacing="10.0">
       <children>
           <Button fx:id="btnVizPrez" onAction="#onVizPrezClick" text="Vizualizare Prezente" />
           <Button fx:id="btnVizAdminPrez" onAction="#onVizPrezAdminClick" text="Vizualizare Prezente (Admin)" />
       </children>
-   </HBox>
+    </HBox>
+
 </VBox>
