@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" spacing="15.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="org.uav.prezentui.PrezentUIController">
+<VBox alignment="CENTER" spacing="15.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uav.prezentui.PrezentUIController">
     <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
     </padding>
@@ -13,7 +13,7 @@
     <Label style="-fx-font-size: 24.0" text="Universitatea de Stiinte Exacte 'Aurel Vlaicu' Arad" />
     <VBox alignment="CENTER" spacing="2" xmlns:fx="http://javafx.com/fxml">
         <Label text="Interfata grafica pentru trecerea si vizualizarea prezenteleor" wrapText="true" />
-        <Label text="Infortmatica, Anul II (2025 - 2026)" wrapText="true" />
+        <Label text="Proiect la Programare Orientata pe Obiecte, Infortmatica, Anul II (2025 - 2026)" wrapText="true" />
     </VBox>
 
     <!-- adaugam separator -->

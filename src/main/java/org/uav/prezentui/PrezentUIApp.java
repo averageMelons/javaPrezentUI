@@ -21,9 +21,9 @@ public class PrezentUIApp extends Application {
     public static void startTabel(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(PrezentUIApp.class.getResource("prezente-tabel.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 960, 540);
-        stage.setTitle("Universitatea de Stiinte Exacte \"Aurel Vlaicu\" Arad - Vizualizare prezente");
+        stage.setTitle(" ");
         stage.setScene(scene);
-        stage.setResizable(true);
+        stage.setResizable(false);
         stage.show();
     }
 }
