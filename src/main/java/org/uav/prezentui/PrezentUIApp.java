@@ -1,11 +1,13 @@
 package org.uav.prezentui;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
+import static org.uav.prezentui.Launcher.viewAdminTable;
 
 public class PrezentUIApp extends Application {
     @Override
@@ -20,8 +22,13 @@ public class PrezentUIApp extends Application {
 
     public static void startTabel(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(PrezentUIApp.class.getResource("prezente-tabel.fxml"));
+<<<<<<< Updated upstream
         Scene scene = new Scene(fxmlLoader.load(), 960, 540);
         stage.setTitle(" ");
+=======
+        Scene scene = new Scene(fxmlLoader.load(), viewAdminTable ? 925 : 720, 540);
+        stage.setTitle("Universitatea de Stiinte Exacte \"Aurel Vlaicu\" Arad - Vizualizare prezente");
+>>>>>>> Stashed changes
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

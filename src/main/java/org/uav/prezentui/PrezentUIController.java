@@ -5,6 +5,7 @@ import javafx.geometry.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import net.synedra.validatorfx.Check;
 import org.controlsfx.control.PopOver;
 
 import java.io.BufferedWriter;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -19,8 +21,9 @@ import static javafx.geometry.Pos.*;
 
 // Clasa care controleaza elementele (butoane, meniuri etc) aplicatiei
 public class PrezentUIController {
+    public String password = "UAV2025";
+
     // ID-uri pentru fiecare button
-    public boolean viewAdminTable;
     @FXML protected Button btnIntPrez;
     @FXML protected Button btnVizPrez;
     @FXML protected Button btnVizAdminPrez;
@@ -30,9 +33,14 @@ public class PrezentUIController {
     @FXML protected ComboBox<String> cmb = new ComboBox<String>();
     @FXML protected ToggleGroup group = new ToggleGroup();
     @FXML protected TextField numeField = new TextField();
+    @FXML protected PasswordField __psfl = new PasswordField();
+    @FXML protected List<CheckBox> tipPrez = List.of(
+      new CheckBox("Curs"),
+      new CheckBox("Laborator")
+    );
 
     // Pop-over pentru introducere prezente
-    @FXML protected void onHelloButtonClick() {
+    @FXML public void onHelloButtonClick() {
         // creeam un layout vertical pentru a ordona frumos elementele
         VBox box = new VBox(15);
         box.setPadding(new Insets(10, 10, 10, 10));
@@ -43,15 +51,6 @@ public class PrezentUIController {
             cmb.getItems().addAll(
                 "Programare orientata obiect"
             );
-        }
-
-        // creeam un grup de butoane radio (o singura alegere) pentru materii
-        if (group.getToggles().isEmpty()) {
-            for (String label : labels) {
-                RadioButton rb = new RadioButton(label);
-                rb.setToggleGroup(group);
-                buttons.add(rb);
-            }
         }
 
         // adaugam elemente ca "noduri"
@@ -66,7 +65,7 @@ public class PrezentUIController {
             );
 
             // nu putem imbina liste de noduri cu noduri pe cont propriu, deci le separam
-            box.getChildren().addAll(buttons);
+            box.getChildren().addAll(tipPrez);
 
             // creeam un layout orizontal inauntrul layout-ului nostru pentru a aseza butonul pe partea dreapta a
             // ferestrei si adaugam butonul
@@ -76,9 +75,7 @@ public class PrezentUIController {
             // creeam butonul de Submit
             Button btnSubmit = new Button("Prezent!");
             btnSubmit.setDefaultButton(true);
-            btnSubmit.setOnAction(_ -> {
-                writeElevToFile();
-            });
+            btnSubmit.setOnAction(_ -> writeElevToFile());
 
             // adaugam un button in layout-ul orizontal
             btnPrezentBox.getChildren().add(btnSubmit);
@@ -95,13 +92,13 @@ public class PrezentUIController {
         popOver.show(btnIntPrez);
     }
 
-    @FXML protected void onVizPrezClick() throws IOException {
-        viewAdminTable = false;
+    @FXML public void onVizPrezClick() throws IOException {
+        org.uav.prezentui.Launcher.viewAdminTable = false;
         PrezentUIApp.startTabel( new Stage() );
     }
 
     // Pop-over pentru vizualizare prezente (admin)
-    @FXML protected void onVizPrezAdminClick() {
+    @FXML public void onVizPrezAdminClick() {
         // creeam un layout vertical
         VBox box = new VBox(15);
         box.setPadding(new Insets(10, 10, 10, 10));
@@ -114,16 +111,23 @@ public class PrezentUIController {
 
         if (btnPrezentBox.getChildren().isEmpty()) {
             // adaugam un button in layout-ul orizontal
-            btnPrezentBox.getChildren().add(
-                    new Button("Submite si intra")
-            );
+            Button __btn = new Button("Submite si intra");
+            btnPrezentBox.getChildren().add(__btn);
+            __btn.setDefaultButton(true);
+            __btn.setOnAction(_ -> {
+                try {
+                    viewAdminTableStage(__psfl.getText());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
 
             // adaugam elemente in layout
             box.getChildren().addAll(
                     new Label("ATENTIE! Aceaste portiune este menita doar pentru profesori si administratori!"),
                     new Separator(),
                     new Label("Parola:"),
-                    new PasswordField(),
+                    __psfl,
                     btnPrezentBox
             );
         }
@@ -160,11 +164,11 @@ public class PrezentUIController {
             RadioButton __curs = (RadioButton) group.getSelectedToggle();
 
             String line = String.join(",",
-                    Objects.toString(LocalDateTime.now()),
+                    Objects.toString(LocalDate.now()),
                     numeField.getText(),
                     cmb.getSelectionModel().getSelectedItem(),
-                    (Objects.equals(__curs.getText(), labels.get(0)) ? "PREZENT" : " "),
-                    (Objects.equals(__curs.getText(), labels.get(1)) ? "PREZENT" : " "));
+                    (Objects.equals(tipPrez.get(0).isSelected(), true) ? "PREZENT" : " "),
+                    (Objects.equals(tipPrez.get(1).isSelected(), true) ? "PREZENT" : " "));
 
             IO.println(line);
 
@@ -184,5 +188,32 @@ public class PrezentUIController {
         }
         // resetam Text Field-ul la urma pentru a preveni erori
         numeField.setText(null);
+        cmb.getSelectionModel().clearSelection();
+        tipPrez.get(0).setSelected(false);
+        tipPrez.get(1).setSelected(false);
+    }
+
+    @FXML public void viewAdminTableStage(String pass) throws IOException {
+        if (Objects.equals(pass, password)) {
+            org.uav.prezentui.Launcher.viewAdminTable = true;
+            PrezentUIApp.startTabel( new Stage() );
+        } else {
+            Dialog<ButtonType> dialog;
+            if (pass.isBlank()) {
+                // fara parola, da eroare
+                dialog = new Dialog<>();
+                dialog.setHeaderText("Eroare!");
+                dialog.setContentText("Nici-o parola inserata.");
+                dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+                dialog.showAndWait();
+            } else {
+                // parola gresita, da eroare
+                dialog = new Dialog<>();
+                dialog.setHeaderText("Eroare!");
+                dialog.setContentText("Parola este incorecta.");
+                dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+                dialog.showAndWait();
+            }
+        }
     }
 }
