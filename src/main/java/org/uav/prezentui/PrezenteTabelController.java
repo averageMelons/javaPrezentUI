@@ -94,9 +94,9 @@ public class PrezenteTabelController {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
-                if (Objects.equals(values[1], txtFieldLabel.getText()) && !Launcher.viewAdminTable)
+                if ((Objects.equals(values[1], txtFieldLabel.getText()) && (!Launcher.viewAdminTable || (Launcher.viewAdminTable && !txtFieldLabel.getText().isBlank()))))
                     data.add(new Person(values[0], values[1], values[2], values[3], values[4]));
-                else if (Launcher.viewAdminTable)
+                else if (Launcher.viewAdminTable && txtFieldLabel.getText().isBlank())
                     data.add(new Person(values[0], values[1], values[2], values[3], values[4]));
             }
         } catch (IOException e) {
