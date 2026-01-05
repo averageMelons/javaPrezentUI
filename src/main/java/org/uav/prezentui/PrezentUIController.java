@@ -185,6 +185,9 @@ public class PrezentUIController {
                 e.printStackTrace();
             }
 
+            // Show quiz after marking attendance
+            QuizController quizController = new QuizController();
+            quizController.showQuiz();
         }
         // resetam Text Field-ul la urma pentru a preveni erori
         numeField.setText(null);
