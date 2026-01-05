@@ -162,15 +162,22 @@ public class PrezentUIController {
         } else {
             IO.println("yay");
             RadioButton __curs = (RadioButton) group.getSelectedToggle();
+            
+            String name = numeField.getText();
+            String materie = cmb.getSelectionModel().getSelectedItem();
+            boolean curs = Objects.equals(tipPrez.get(0).isSelected(), true);
+            boolean laborator = Objects.equals(tipPrez.get(1).isSelected(), true);
+
             // Deschide quiz, prezenta se trece doar daca se raspunde corect la o intrebare
             QuizController quizController = new QuizController();
             quizController.showQuiz(() -> {
-                String line = String.join(",",
+            	
+            	String line = String.join(",",
                         Objects.toString(LocalDate.now()),
-                    numeField.getText(),
-                    cmb.getSelectionModel().getSelectedItem(),
-                    (Objects.equals(tipPrez.get(0).isSelected(), true) ? "PREZENT" : " "),
-                    (Objects.equals(tipPrez.get(1).isSelected(), true) ? "PREZENT" : " "));
+                        name,
+                        materie,
+                        (curs ? "PREZENT" : " "),
+                        (laborator ? "PREZENT" : " "));
 
                 IO.println(line);
 
