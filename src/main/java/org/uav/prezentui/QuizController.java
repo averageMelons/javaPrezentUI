@@ -17,8 +17,10 @@ public class QuizController {
     private Label feedbackLabel;
     private Button submitButton;
     private ToggleGroup answerGroup;
+    private Runnable onQuizCompleted;
 
-    public void showQuiz() {
+    public void showQuiz(Runnable onQuizCompleted) {
+        this.onQuizCompleted = onQuizCompleted;
         quizManager = new QuizManager();
         quizManager.initialize();
 
@@ -110,10 +112,17 @@ public class QuizController {
         
         if (quizManager.checkAnswer(selectedAnswer)) {
             // Correct answer
-            feedbackLabel.setText("Bravo! Raspunsul este corect! Poti inchide fereastra.");
+            feedbackLabel.setText("Bravo! Raspunsul este corect!");
             feedbackLabel.setStyle("-fx-text-fill: #2e7d32;");
             feedbackLabel.setVisible(true);
             submitButton.setDisable(true);
+            
+            // Execute callback and close window
+            if (onQuizCompleted != null) {
+                onQuizCompleted.run();
+            }
+            
+            quizStage.close();
         } else {
             // Incorrect answer
             feedbackLabel.setText("Raspunsul este gresit. Incearca din nou!");

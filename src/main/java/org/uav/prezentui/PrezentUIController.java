@@ -162,32 +162,31 @@ public class PrezentUIController {
         } else {
             IO.println("yay");
             RadioButton __curs = (RadioButton) group.getSelectedToggle();
-
-            String line = String.join(",",
-                    Objects.toString(LocalDate.now()),
+            // Deschide quiz, prezenta se trece doar daca se raspunde corect la o intrebare
+            QuizController quizController = new QuizController();
+            quizController.showQuiz(() -> {
+                String line = String.join(",",
+                        Objects.toString(LocalDate.now()),
                     numeField.getText(),
                     cmb.getSelectionModel().getSelectedItem(),
                     (Objects.equals(tipPrez.get(0).isSelected(), true) ? "PREZENT" : " "),
                     (Objects.equals(tipPrez.get(1).isSelected(), true) ? "PREZENT" : " "));
 
-            IO.println(line);
+                IO.println(line);
 
-            try (BufferedWriter writer =
-                         Files.newBufferedWriter(Paths.get("data.csv"),
-                                 StandardOpenOption.CREATE,
-                                 StandardOpenOption.APPEND)) {
+                try (BufferedWriter writer =
+                             Files.newBufferedWriter(Paths.get("data.csv"),
+                                     StandardOpenOption.CREATE,
+                                     StandardOpenOption.APPEND)) {
 
-                writer.write(line);
-                writer.newLine();
-                IO.println(writer.toString());
+                    writer.write(line);
+                    writer.newLine();
+                    IO.println(writer.toString());
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            // Show quiz after marking attendance
-            QuizController quizController = new QuizController();
-            quizController.showQuiz();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
         // resetam Text Field-ul la urma pentru a preveni erori
         numeField.setText(null);

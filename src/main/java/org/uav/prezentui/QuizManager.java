@@ -40,7 +40,7 @@ public class QuizManager {
 
         // Q 3
         questions.add(new Question(
-            "Adevărat sau Fals: Un constructor are un tip de returnare.",
+            "Un constructor are un tip de returnare.",
             Arrays.asList("Adevărat", "Fals"),
             "Fals"
         ));
@@ -61,7 +61,7 @@ public class QuizManager {
 
         // Q 6
         questions.add(new Question(
-            "Adevărat sau Fals: În Java, tablourile (arrays) sunt obiecte.",
+            "În Java, tablourile (arrays) sunt obiecte.",
             Arrays.asList("Adevărat", "Fals"),
             "Adevărat"
         ));
@@ -75,7 +75,7 @@ public class QuizManager {
 
         // Q 8
         questions.add(new Question(
-            "Care este valoarea implicită (default) a unei variabile de tip boolean în Java?",
+            "Care este valoarea implicită a unei variabile de tip boolean în Java?",
             Arrays.asList("true", "false", "null", "undefined"),
             "false"
         ));
@@ -83,6 +83,7 @@ public class QuizManager {
 
     private void selectRandomQuestion() {
         int nextIndex;
+        // Selectam o intrebare noua diferita de cea anterioara
         do {
             nextIndex = random.nextInt(questions.size());
         } while (nextIndex == currentQuestionIndex && questions.size() > 1);
