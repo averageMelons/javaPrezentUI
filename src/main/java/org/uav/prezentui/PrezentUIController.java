@@ -5,7 +5,6 @@ import javafx.geometry.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import net.synedra.validatorfx.Check;
 import org.controlsfx.control.PopOver;
 
 import java.io.BufferedWriter;
@@ -14,7 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static javafx.geometry.Pos.*;
@@ -40,7 +38,7 @@ public class PrezentUIController {
     );
 
     // Pop-over pentru introducere prezente
-    @FXML public void onHelloButtonClick() {
+    @FXML public void onEnterBtnClick() {
         // creeam un layout vertical pentru a ordona frumos elementele
         VBox box = new VBox(15);
         box.setPadding(new Insets(10, 10, 10, 10));

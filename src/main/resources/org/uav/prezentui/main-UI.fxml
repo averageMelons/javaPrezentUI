@@ -3,6 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <VBox alignment="CENTER" spacing="15.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uav.prezentui.PrezentUIController">
     <padding>
@@ -10,17 +11,26 @@
     </padding>
 
     <!-- adaugam titlu si text -->
-    <Label style="-fx-font-size: 24.0" text="Universitatea de Stiinte Exacte 'Aurel Vlaicu' Arad" />
+    <Label style="-fx-font-size: 24.0" text="Universitatea de Stiinte Exacte 'Aurel Vlaicu' Arad">
+      <font>
+         <Font name="Arial Black" size="12.0" />
+      </font></Label>
     <VBox alignment="CENTER" spacing="2" xmlns:fx="http://javafx.com/fxml">
-        <Label text="Interfata grafica pentru trecerea si vizualizarea prezenteleor" wrapText="true" />
-        <Label text="Proiect la Programare Orientata pe Obiecte, Infortmatica, Anul II (2025 - 2026)" wrapText="true" />
+        <Label text="Interfata grafica pentru trecerea si vizualizarea prezenteleor" wrapText="true">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font></Label>
+        <Label text="Proiect la Programare Orientata pe Obiecte, Infortmatica, Anul II (2025 - 2026)" wrapText="true">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font></Label>
     </VBox>
 
     <!-- adaugam separator -->
     <Separator />
 
     <!-- adaugam butoane ce vor rula functii/metoda cu "onAction" -->
-    <Button fx:id="btnIntPrez" onAction="#onHelloButtonClick" text="Introducere Prezenta" />
+    <Button fx:id="btnIntPrez" onAction="#onEnterBtnClick" text="Introducere Prezenta" />
     <HBox alignment="CENTER" prefHeight="8.0" prefWidth="518.0" spacing="10.0">
       <children>
           <Button fx:id="btnVizPrez" onAction="#onVizPrezClick" text="Vizualizare Prezente" />

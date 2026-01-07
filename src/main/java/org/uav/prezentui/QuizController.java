@@ -116,13 +116,17 @@ public class QuizController {
             feedbackLabel.setStyle("-fx-text-fill: #2e7d32;");
             feedbackLabel.setVisible(true);
             submitButton.setDisable(true);
-            
-            // Execute callback and close window
-            if (onQuizCompleted != null) {
-                onQuizCompleted.run();
-            }
-            
-            quizStage.close();
+
+            javafx.animation.PauseTransition pause = new javafx.animation.PauseTransition(javafx.util.Duration.millis(3000));
+            pause.setOnFinished(_ -> {
+                // Execute callback and close window
+                if (onQuizCompleted != null) {
+                    onQuizCompleted.run();
+                }
+
+                quizStage.close();
+            });
+            pause.play();
         } else {
             // Incorrect answer
             feedbackLabel.setText("Raspunsul este gresit. Incearca din nou!");
@@ -130,7 +134,7 @@ public class QuizController {
             feedbackLabel.setVisible(true);
             
             // Display next question after a short delay
-            javafx.animation.PauseTransition pause = new javafx.animation.PauseTransition(javafx.util.Duration.millis(1000));
+            javafx.animation.PauseTransition pause = new javafx.animation.PauseTransition(javafx.util.Duration.millis(3000));
             pause.setOnFinished(_ -> displayQuestion());
             pause.play();
         }
